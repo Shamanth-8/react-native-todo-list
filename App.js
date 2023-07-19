@@ -2,12 +2,13 @@ import { useState } from "react";
 import { StyleSheet, View, FlatList, Button } from "react-native";
 import { StatusBar } from "expo-status-bar"; 
 
-import GoalInput from "./components/GoalItem";
-import GoalInput from "./components/Goalinput";
+import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/Goalinput"; // bruh you named both input and item the same!!
 
 export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
+  console.log('Goals ----- ', courseGoals)
 
   function StartAddGoalHandler() {
     setModalIsVisible(true);
@@ -20,14 +21,15 @@ export default function App() {
   function addGoalHandler(enteredGoalText) {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      { text: enteredGoalText, key: Math.random().toString() },
+      { text: enteredGoalText, id: Math.random().toString() },
     ]);
     endAddGoalHandler();
   }
 
   function deleteGoalHandle(id) {
     setCourseGoals((currentCourseGoals) => {
-      return currentCourseGoals.filter(() => goal.id !== id);
+      console.log(id)
+      return currentCourseGoals.filter((goal) => goal.id !== id);
     });
   }
 
@@ -49,6 +51,7 @@ export default function App() {
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
+            console.log('itemData ----- ', itemData)
             return (
               <GoalItem
                 text={itemData.item.text}
